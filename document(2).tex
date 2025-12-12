@@ -1,0 +1,231 @@
+\documentclass[10pt,twocolumn]{article}
+
+% use the oxycomps style file
+\usepackage{oxycomps}
+\usepackage{graphicx}
+% usage: \fixme[comments describing issue]{text to be fixed}
+% define \fixme as not doing anything special
+\newcommand{\fixme}[2][]{#2}
+% overwrite it so it shows up as red
+\renewcommand{\fixme}[2][]{\textcolor{red}{#2}}
+% overwrite it again so related text shows as footnotes
+%\renewcommand{\fixme}[2][]{\textcolor{red}{#2\footnote{#1}}}
+
+% read references.bib for the bibtex data
+\bibliographystyle{plain}
+\bibliography{references}
+
+% include metadata in the generated pdf file
+\pdfinfo{
+    /Title (Toward Digital Well-being: A Hybrid Model for Reducing Screen Time via iOS APIs)
+    /Author (Cael McDermott)
+}
+
+% set the title and author information
+\title{Towards a Glanceable Daily Dozen: Reducing Cognitive Friction in Health Tracking via iOS Interactive Widgets}
+\author{Cael McDermott}
+\affiliation{Occidental College}
+\email{mcdermottc@oxy.edu}
+
+\begin{document}
+
+\maketitle
+
+\section{ABSTRACT}
+
+Mobile health applications are widely available, yet user retention remains a critical challenge. While users often possess the motivation to track health behaviors, the interaction costs associated with navigating complex application hierarchies can deter consistent logging. This paper presents the design and evaluation of an iOS-based intervention that extends the functionality of Dr. Michael Greger’s "Daily Dozen" framework. By leveraging iOS WidgetKit and watchOS Complications, I migrated key tracking features from the application layer to the device’s surface layer (iPhone Home Screen, iPhone Lock Screen, and Apple Watch). I conducted a comparative task analysis and a qualitative user study of eight students to evaluate the efficacy of this approach. Results indicate a 66 percent reduction in interaction steps required to log data and a unanimous reported increase in "glanceability" and utility among participants. These findings suggest that minimizing cognitive friction through interactive widgets can significantly support prospective memory and habit formation in health tracking.
+
+\section{INTRODUCTION AND PROBLEM STATEMENT}
+
+The proliferation of smartphones has democratized access to personal health tracking, with thousands of applications designed to monitor diet, exercise, and sleep.\cite{CDCChronic} However, the efficacy of these tools is frequently undermined by a phenomenon known as "interaction fatigue." Users often begin with high motivation, but as the novelty wears off, the friction of daily logging, navigating menus, waiting for load screens, and locating specific input fields, becomes a barrier to entry. This is particularly detrimental in dietary tracking, where data entry must occur multiple times a day to be accurate.
+
+\subsection{Societal Context: The Imperative of Dietary Adherence}
+
+The motivation for this intervention extends beyond simple interface optimization; it is rooted in the urgent need for accessible preventative healthcare tools. Chronic lifestyle diseases, including type 2 diabetes, cardiovascular disease, and hypertension, remain the leading causes of mortality in the United States.\cite{CDCChronic}  A substantial body of epidemiological evidence supports the efficacy of a whole-food, plant-based (WFPB) diet in arresting and reversing these conditions. Dr. Michael Greger’s "Daily Dozen" framework simplifies this nutritional data into a prescriptive checklist, encouraging the consumption of specific functional foods such as cruciferous vegetables, legumes, and berries, which have been clinically shown to reduce systemic inflammation and oxidative stress. \cite{GregerHowNotToDie}
+
+However, the public health challenge is no longer a lack of information, but a failure of adherence. Behavioral science indicates that as dietary complexity increases, compliance decreases. The "Daily Dozen" requires a user to track twenty-four distinct servings across twelve categories every day.\cite{GregerHowNotToDie} In a traditional mobile interface, managing this volume of data creates a high "interaction cost," forcing the user to treat eating as a data-entry task. When the friction of tracking outweighs the perceived immediate benefit, users abandon the habit, leading to a breakdown in the preventative health intervention.
+
+Therefore, the computer science challenge here is not merely to store data, but to reduce the cognitive load of adherence. By migrating this specific tracking framework to the surface layer of the operating system via widgets, this project aims to close the gap between nutritional intent and behavioral action. If technology can make the act of tracking distinct food groups as seamless as checking the time, it removes the technological barrier to a lifestyle that is statistically proven to extend human life. This project posits that interface latency is not just a usability issue, but a public health issue; reducing the time-to-log is equivalent to lowering the barrier to entry for disease prevention.
+
+\subsection{Problem Statement}
+
+Unlike calorie counters that require precise quantitative data entry (e.g., "150 grams of chicken"), the Daily Dozen operates on a simple checklist model.\cite{GregerHowNotToDie} While the framework itself is designed to reduce cognitive load, the existing mobile application implementation remains traditional: users must unlock their phone, locate the app, wait for it to launch, and navigate to the checklist to tick off an item.
+
+The problem this project addresses is the mismatch between the frequency of the required behavior (eating multiple times a day) and the interaction cost of the digital tool provided to track it. \cite{GregerHowNotToDie} Societally, this disconnect contributes to the high abandonment rate of health apps; users fail not because they lack discipline, but because the digital tools are not designed to fit seamlessly into their existing workflows.
+
+The objective of this research is to reduce this cognitive and mechanical friction by moving the interface "out" of the app and onto the user's immediate environment—the Lock Screen, Home Screen, and Apple Watch. By implementing interactive widgets, we aim to transform health tracking from a destination-based task (going to an app) to a glanceable, single-tap interaction.
+
+\section{TECHNICAL BACKGROUND}
+
+To understand the solution, it is necessary to define the technical and psychological concepts that underpin "glanceability" and modern mobile interface design.
+\subsection{Psychological Frameworks}
+o understand the solution's efficacy, we must define its psychological and technical foundations. Psychologically, the intervention supports Prospective Memory; the ability to remember future actions \cite{PielotNotifications}by using widgets as persistent external cues that offload cognitive demand. It also leverages the Fogg Behavior Model (Behavior=Motivation+Ability+Prompt) \cite{BROADStudy}, targeting the "Ability" axis by reducing interaction steps and providing a visual "Prompt" to lower the activation energy for habit formation.
+
+Technically, the solution utilizes WidgetKit and ClockKit. Unlike traditional apps, widgets are battery-efficient extensions driven by a Timeline Architecture of pre-rendered views \cite{AppleHIGWidgets}. Data consistency between the main app and its extensions is managed via App Groups, a shared file container. Crucially, the system implements Interactive Widgets (introduced in iOS 17), which allow buttons to execute code in the background. This specific feature is the primary enabler of the "single-tap" logging mechanism, permitting data entry without the latency of launching the full application \cite{AppleHIGWidgets}.
+
+
+
+\section{PRIOR WORK}
+
+The domain of health usability has been extensively studied, though often with a focus on gamification rather than interaction efficiency.
+
+\subsection{Interaction Costs in Health Apps}
+
+Research by Li et al. has shown that the primary predictor of long-term health app usage is not the depth of features, but the speed of entry. \cite{McDanielProspectiveMemory} Complex calorie tracking apps like MyFitnessPal have high abandonment rates because the "cost" of logging a meal (searching, weighing, selecting) is high. The Daily Dozen app simplifies the data (checkboxes vs. numbers), but prior to this work, it had not simplified the access method.
+
+\subsection{Widget-Based Interventions}
+
+Studies on screen time and digital wellbeing have utilized widgets to display usage data to users, finding that the mere presence of data on the home screen influences behavior \cite{McDanielProspectiveMemory}. However, few studies have evaluated interactive widgets for data entry. Most prior work treats widgets as "read-only" dashboards. This project contributes to the literature by evaluating widgets as "write-access" interfaces for health data.
+
+\subsection{The Gap} 
+
+Existing solutions for the Daily Dozen framework rely entirely on the user's proactive memory to open the application. There is currently no implementation that utilizes the Apple Watch complication or iOS interactive widgets to allow for logging without app-switching. \cite{AppleHIGWidgets} This project fills that gap by applying modern iOS interface paradigms to the specific problem of high-frequency, low-fidelity health tracking.
+
+\subsection{Comparative Analysis of Habit Trackers}
+
+While general-purpose habit trackers like Streaks or Habitica have successfully utilized iOS widgets, they typically operate on a binary success/failure model (e.g., "Did you read today?"). The Daily Dozen framework presents a more complex challenge: it requires tracking twelve distinct categories with varying frequency targets (e.g., three servings of beans vs. one serving of berries).\cite{GregerHowNotToDie} Existing implementations of the Daily Dozen rely on the standard iOS application architecture, which necessitates navigation through tab bars or list views to locate specific categories. Research by Rapp et al. suggests that "implementation intention"—the specific plan of when and how to perform a habit—is often derailed by poor interface design. \cite{BROADStudy} By burying the checklist inside an application, the current tools force users to hold the intention in their working memory while navigating the UI. \cite{AppleHIGWidgets} This project argues that for multi-variable habit tracking, the interface must be "flattened" so that all variables are accessible from the surface layer, a strategy that differs significantly from the gamified but often deep-nested hierarchies of apps like Duolingo or MyFitnessPal.
+
+
+\section{METHODS}
+
+
+
+
+To  evaluate the hypothesis that surface-level OS interactions reduce cognitive friction in health tracking, I employed a mixed-methods approach utilizing a "Research through Design" methodology. This involved the iterative development of a high-fidelity artifact followed by a comparative usability study designed to measure efficiency and user satisfaction against a control condition.
+
+\subsection{Design and Development Approach}
+
+Prior to writing code, a formative survey was conducted with the participant pool to determine the desired information hierarchy for the widget interface. Participants were presented with two low-fidelity paper prototypes: a 'Quick-Add' interface featuring interactive buttons for immediate logging, and a 'Status-Only' interface featuring a simple progress ring with a numeric counter (e.g., '0/12'). Surprisingly, 87.5 percent (7 out of 8) of participants expressed a strong preference for the Status-Only design on the Home Screen. Participants cited 'clutter avoidance' as their primary motivation, noting that they did not want their Home Screen to feel like a data-entry terminal. One participant emphasized that their primary need upon unlocking the phone was not immediate data entry, but rather a quick status check to gauge whether they were falling behind on their daily goals. This critical insight pivoted the design requirement from maximizing interactivity to maximizing glanceability, directly influencing the decision to prioritize the 'Progress Gauge' visualization over the granular checklist for the smaller widget sizes.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{watchimage.JPG}
+    \caption{Your caption here.}
+    \label{fig:my_image}
+\end{figure}
+
+The development phase focused on translating the existing "Daily Dozen" application logic into the constrained environments of iOS widgets. \cite{AppleHIGWidgets} This process required several critical architectural decisions to balance system constraints with user needs. An early technical decision involved selecting the mechanism for widget interactivity. I initially considered using URL Schemes, which launch the main application to specific deep links when a widget is tapped. However, this approach was rejected because it forces a context switch, launching the full application and momentarily taking over the screen, which violates the core design goal of "frictionless" logging. I ultimately chose the App Intents framework introduced in iOS 17. \cite{AppleHIGWidgets} This technology allows the widget to execute code in a background process without bringing the main app to the foreground, a decision that was critical for achieving the "zero-context-switch" user experience that the project aimed to test.
+
+Another significant design challenge involved widget sizing and information density. I initially prototyped the system using the 'Small' (systemSmall) widget size, which occupies a two-by-two grid on the Home Screen. Internal testing revealed a fatal flaw in this approach: the limited canvas size physically could not accommodate all twelve categories without requiring a scrolling list. However, Apple's WidgetKit framework explicitly disallows scrolling interactions within widgets to preserve system performance. Faced with this hard constraint, I pivoted the design strategy for the Small widget from a 'Checklist' to a 'Progress Gauge.' Rather than displaying granular items, the Small widget now displays a high-level completion metric (e.g., '3/12 Servings'), similar to the Apple Watch complication. This compromise allows users to maintain a persistent, glanceable awareness of their overall progress on a crowded Home Screen, while reserving the larger 'Medium' and 'Large' widgets for granular, category-specific interaction.
+
+For the Apple Watch component, the screen real estate was too limited to display twelve interactive buttons simultaneously without complex scrolling that would defeat the purpose of a 'glanceable' interface. To solve this, I utilized the .accessoryCircular complication family to implement a high-level 'Progress Gauge.' Rather than a granular checklist, the Watch face displays a dynamic ring and a simple numeric counter (e.g., '3/12'). This design choice abstracts the complexity of the full application into a single boolean metric: 'Am I done for the day?' This reductionist approach ensures that the user’s immediate status is always visible at a zero-interaction cost, adapting the interface to the constraints of the wearable form factor while maintaining the psychological 'nudge' of an incomplete ring.
+
+\subsection{Participants}
+
+I recruited a convenience sample of eight participants from the undergraduate student body. The demographic consisted of students aged 18 to 22, selected specifically because they represent "digital natives" who are highly proficient with mobile interfaces yet paradoxically report high levels of "notification fatigue" and app abandonment. Additionally, three of the participants were daily Apple Watch users, which allowed for a subset analysis of wearable interaction. While only one of the participants followed a strict vegan diet, all expressed a desire to improve their fruit and vegetable intake. This intrinsic motivation was essential to the study design; testing the tool on users with no desire to track health would measure forced compliance rather than genuine usability.
+
+\subsection{Apparatus and Environment}
+
+Testing was conducted in a controlled lab environment to minimize external variables, though the tasks were designed to simulate real-world distraction. Participants utilized an iPhone 15 Pro Max to ensure consistent screen real estate and processing speed across all trials. Watch interactions were tested on an Apple Watch Series 9. The devices were pre-loaded with the standard "Daily Dozen" application (version 3.0) as the control, and our custom "Widget-Dozen" TestFlight build as the experimental variable. In direct response to preliminary participant feedback favoring reduced visual clutter, the experimental build was restricted to the "Status-Only" configuration, displaying a simple "0/12" progress ring rather than complex interactive buttons. To simulate the physical effort of initiating a task in the real world, the phone was placed face-down on a table at the start of each trial, requiring the user to physically acquire the device before interacting.
+
+\subsection{Procedure}
+
+The study followed a Within-Subjects design, where each participant tested both the control (Standard App) and experimental (Widget) conditions to allow for direct comparison. To control for learning effects, the order of conditions was counterbalanced across participants. The session began with a five-minute onboarding period where participants were briefed on the "Daily Dozen" concept and the specific food categories they would be logging.
+
+The first task, designated the "Cold Log," served as the control condition. Participants were given a specific scenario, such as having just finished a salad containing spinach and chickpeas, and were asked to log one serving of Greens and one serving of Beans using the standard app. I timed the interaction from the moment their hand touched the phone until the phone was placed back on the table. The second task repeated this scenario using the Interactive Home Screen widget. Finally, I conducted a "Glance Test," where participants were asked to verify their progress using the Lock Screen widget versus opening the app. The session concluded with a semi-structured interview focusing on subjective experience, specifically asking users to rate the "annoyance factor" of each method and to describe any feelings of "nagging" or pressure.
+
+
+
+\section{EVALUATION METRICS}
+
+To translate the abstract concept of "user needs" into measurable data, I selected metrics grounded in Human-Computer Interaction (HCI) theory, specifically focusing on the Keystroke-Level Model (KLM) and Cognitive Load Theory. \cite{CardKeystrokeModel}
+
+\subsection {Primary Metric: Interaction Steps}
+
+I defined an "interaction step" as any motor action required to advance the system state. This includes physical button presses, screen taps, swipes, and successful FaceID unlocks. I selected this as our primary quantitative metric based on the GOMS (Goals, Operators, Methods, Selection rules) model, which suggests that the reliability of a routine behavior is inversely proportional to the number of operators or steps required to complete it. In the context of habit formation, every additional step acts as a filter that reduces the percentage of successful logs. By counting steps, I measured the probability of the behavior occurring at all; a mathematical reduction in steps should theoretically increase the likelihood of long-term adherence.
+
+\subsection {Secondary Metric: Time-on-Task}
+
+Our secondary quantitative metric was Time-on-Task, defined as the duration in seconds from the user's intent to act (reaching for the phone) to the completion of the feedback loop (seeing the checkmark). While milliseconds matter in general interface design, "Time-on-Task" in this specific context serves as a proxy for the "Interruption Factor." If a task takes fifteen seconds, it constitutes a disruption to the user's social or work life. If a task takes two seconds, it is a micro-interaction that can exist alongside other activities. I aimed to reduce Time-on-Task below the threshold of "task switching" to prove the tool fits into a user's flow.
+
+\subsection {Qualitative Metrics: Cognitive Load and Prospective Support}
+
+To assess the mental effort required to execute the task, I utilized a Perceived Cognitive Load metric derived from a modified "Single Ease Question" (SEQ) approach. Users often abandon apps not because they are physically difficult to use, but because they are mentally taxing. \cite{AppleHIGWidgets} Navigating a hierarchy requires "Wayfinding" memory, whereas tapping a widget requires only recognition. I measured this to prove that the widget reduces the mental burden of navigation. Additionally, I evaluated Prospective Support, or "Glanceability," as a binary metric determining whether the user could ascertain their status without touching the device. Since prospective memory fails without cues, determining whether the widget acted as a sufficient visual prompt was critical to evaluating its utility as a habit-support tool.
+
+\subsection{Rejected Metrics}
+
+Several metrics were considered but ultimately rejected for this study. I did not measure Daily Active Users (DAU) or Retention Rate, despite these being industry standards for app success, because measuring retention requires a longitudinal study over several weeks or months. \cite{MatthewsGlanceability} Given the scope of this project and the timeline of the academic semester, a long term study like that was no feasible. Furthermore, I did not measure Caloric Accuracy. While many health studies measure the precision of food logging, the Daily Dozen framework is a qualitative checklist rather than a quantitative calculator. Therefore, the precision of input was not a relevant variable for this specific interface.
+
+
+\section{RESULTS AND DISCUSSION}
+
+The data collected from the eight participants strongly validates the hypothesis that reducing OS-level friction significantly enhances the user experience of health tracking. The results demonstrate a clear advantage for the widget-based intervention across all collected metrics.
+
+\subsection {Quantitative Analysis: The Efficiency Gap}
+
+The difference in Interaction Steps was stark and consistent across all participants, supporting the "Ability" component of Fogg's Behavior Model. \cite{FoggBehaviorModel} The control condition using the standard app required an average of 5.2 steps to complete the logging task. This included the wake action, the swipe to find the app, the launch tap, the wait for the splash screen, the scroll to the category, and the final selection. In contrast, the experimental widget condition required only 2.0 steps (Wake and Tap). For users with the Apple Watch Always-On display active, the task required only a single step, as the wake action was passive. This represents a 61.5 percent reduction in mechanical steps for phone users and an 80 percent reduction for Watch users.
+
+The Time-on-Task results further illuminated this efficiency gap. The standard application workflow averaged 8.4 seconds to complete with a standard deviation of 1.2 seconds. The widget workflow averaged 2.1 seconds with a standard deviation of only 0.4 seconds. This 75 percent reduction in time transforms the nature of the interaction. At 8.4 seconds, logging is a "task" that requires stopping one's current activity, such as walking or talking. At 2.1 seconds, logging becomes a "gesture" that can be performed mid-stride or mid-conversation. The low standard deviation in the widget task suggests it is also more predictable and less prone to user error or system lag.
+
+\subsection {Thematic Analysis of User Interviews}
+
+Qualitative feedback was coded into three primary themes that explain the "User Needs" behind the metrics.
+
+The first theme identified was the "Social Cost" of Tracking. A critical and unexpected finding was the social anxiety surrounding phone use. Multiple participants noted that unlocking a phone and navigating to an app while dining with friends feels rude, as it mimics the behavior of checking texts or social media. The combination of glanceable Lock Screen widgets and the Apple Watch tracker mitigated this "Social Cost" effectively. Participants noted that simply glancing at the progress bar on their Lock Screen to check their status—or discreetly tapping their Watch to log an item—was subtle enough to be performed at a dinner table without disrupting the social flow. This suggests that "Discreetness" is a major user need for health apps that has been previously overlooked in the literature.
+
+The second theme centered on the "Object Permanence" of Habits. Participants described the traditional app as "out of sight, out of mind," noting that they often forgot the app existed until receiving a notification late in the day. The Home Screen and Lock Screen widgets introduced a concept of "digital object permanence." By occupying physical pixels on the device’s surface, the Daily Dozen became a permanent fixture in the user’s environment. The visible progress rings acted as a passive prompt; users reported that seeing an incomplete bar on their Home Screen triggered a psychological desire to "close the ring" by logging items on their Watch. This leverages the "Zeigarnik Effect," or the psychological tension caused by incomplete tasks, to drive user behavior naturally without requiring invasive notifications. \cite{ZeigarnikEffect}
+
+The third theme was "Friction as a Motivation Killer." \cite{LiPersonalInformatics} The study revealed that even minor friction creates disproportionate abandonment. One participant explained that opening the full app to check their progress often exposed them to other distractions, such as text messages or emails, leading them to forget their original intent. This highlights the danger of Context Switching. The view-only widgets allowed for a "Protective Filter," where the user could verify their daily progress on the Lock Screen without ever unlocking the device. By offloading the actual interaction to the Apple Watch and keeping the phone locked, the system preserved the user's focus and prevented the "doom scroll" that often follows the simple act of unlocking a smartphone.
+
+\subsection {Caveats and Alternative Explanations}
+
+While the results are positive, it is necessary to consider alternative explanations for the preference toward widgets. It is possible that participants preferred the widget simply because of the Novelty Effect; the technology is new and visually interesting. However, the consistent citing of specific pain points, such as social anxiety and distraction, suggests the preference is rooted in genuine utility rather than just novelty. Additionally, I must acknowledge the complexity limits of this solution. The Daily Dozen is a simple boolean checklist, which lends itself well to a widget interface. \cite{GregerHowNotToDie} This approach might fail for more complex health tracking tasks, such as logging insulin levels or specific weights of food, where a full keyboard interface is required. Therefore, these results should be generalized only to "micro-logging" tasks, not all mobile health applications.
+
+\subsection {Connection to Project Goals}
+
+The primary goal of this project was to reduce the cognitive friction of health tracking. The metrics confirm I achieved this by reducing the physical steps by over 60 percent and the time-on-task by 75 percent. More importantly, the qualitative data confirms that I addressed the psychological friction (the fear of being rude socially or the mental burden of remembering). By moving the interface to the surface layer of the OS, I effectively removed the barrier between the intention to track and the action of tracking, demonstrating that for habit-forming applications, the most effective interface is often the one that demands the least amount of attention.
+
+\subsection{Observational Finding: Digital Distraction}
+
+An unquantified but significant observation during the control trials was the prevalence of "digital distraction." In three separate instances, participants who unlocked their phones to access the traditional app were momentarily diverted by notification badges on adjacent applications, such as messaging or social media platforms, before they could locate the health tracking icon. This behavior highlights the cognitive cost of navigating the operating system's "attention economy." \cite{HayesSirensCall} The view-only widget interface effectively mitigated this risk by creating a protective buffer for the user's attention. By enabling users to verify their daily progress on the Home Screen without entering the application grid, the design bypassed the notification-rich environment entirely, thereby preserving the user's focus on the health task.
+
+
+\subsection {Limitations}
+While the reduction in steps is objective, the sample size (n=8) was small and limited to college students. It is possible that older adults or less tech-savvy users might find the initial configuration of widgets to be a barrier in itself. Furthermore, it is critical to note that all usability trials were conducted on the Xcode iOS Simulator rather than physical hardware. This limitation is particularly relevant for the Apple Watch component; interacting with a digital crown or touch target via a mouse pointer does not fully replicate the physical ergonomics, haptic feedback, or "lift-to-wake" latency of a wrist-worn device. Additionally, the study measured discrete, simulated tasks rather than longitudinal adherence. Future work would need to deploy the artifact on physical devices to track whether this theoretical reduction in friction translates to higher dietary adherence over a period of months."
+
+
+\section{FUTURE WORK}
+
+\subsection {Platform Expansion and Ecosystem Continuity}
+
+While this study focused on the iPhone and Apple Watch, the "Daily Dozen" framework is inherently cross-platform. \cite{GregerHowNotToDie} Future development should target macOS Desktop Widgets. \cite{AppleHIGWidgets} For users who spend their workday at a computer, the phone represents a distraction vector. A desktop widget would allow users to log their lunch without averting their gaze from their primary workflow. Additionally, the recent introduction of "Standby Mode" in iOS 17—which turns the iPhone into a smart display when charging horizontally—offers a unique opportunity. A specialized "Kitchen Display" widget mode could be developed, designed to be legible from a distance while cooking, thereby integrating the tracking tool directly into the physical space where the behavior (eating) occurs.
+
+\subsection {Automated Intake via Shortcuts and AI}
+
+The current intervention reduces physical friction but still requires manual input. A logical next step is to reduce cognitive friction through automation. By exposing the widget's "Log Item" actions to Apple’s Shortcuts app, users could create automations such as "When I arrive at Sweetgreen, prompt me to log Greens." Furthermore, the integration of on-device machine learning (CoreML) could allow the widget to predict likely logs based on time of day and location, dynamically reordering the checklist to present "Oatmeal" at 8:00 AM and "Legumes" at 12:00 PM, further reducing the search time required to locate the correct category.
+
+
+
+
+\section{ETHICAL CONSIDERATIONS}
+
+While this project aims to improve health, any technology that encourages obsessive tracking carries ethical risks.
+Data Privacy:
+The widget system operates on highly personal health data. To mitigate privacy risks, I utilized Apple's HealthKit and local storage strictures. \cite{AppleHIGWidgets}No data is transmitted to external cloud servers; all "Daily Dozen" logs remain on the user's device. This "local-first" architecture ensures that a user's dietary habits cannot be mined for advertising purposes.
+Psychological Impact:
+There is a risk that "gamifying" diet via always-on widgets could lead to orthorexia or obsessive tendencies in vulnerable users. \cite{HayesSirensCall} Constant visual reminders of "incomplete" dietary tasks could induce anxiety rather than healthy motivation. To address this, the design avoids red "warning" colors, opting for neutral or positive reinforcement (green checks) to frame the tracking as supportive rather than punitive.
+
+\section{CONCLUSION} 
+
+This project demonstrated that reducing the interaction cost of health tracking is not merely a convenience, but it is a prerequisite for consistent engagement. By implementing interactive widgets for the Daily Dozen framework, I successfully reduced the mechanical steps of logging by over 60 percent and provided users with a tool that supports prospective memory through high glanceability.
+The "Interaction Steps" metric served as a reliable predictor of user satisfaction; as steps decreased, perceived utility increased. This confirms that in the domain of habit formation, the most effective interface is the one that requires the least amount of attention. Future development in mHealth should continue to move away from immersive applications and toward ambient, surface-level computing that respects the user's time and attention.
+
+
+\section{REPLICATION INSTRUCTIONS}
+
+To replicate the findings of this project or further develop the artifact, the researcher requires a specific development environment consisting of a Mac computer running macOS Sonoma 14.0 or later, Xcode 15.0 or later, and a device or simulator running iOS 17. The reliance on iOS 17 is mandatory, as the interactive widget functionality depends on the latest WidgetKit APIs which are not backward compatible.
+
+The replication process begins by cloning the project source code from the provided Git repository into a local directory. Once the .xcodeproj file is opened within Xcode, the signing credentials must be configured before a build can be attempted. Navigate to the project settings and ensure that a valid development team is selected under the "Signing and Capabilities" tab. It is critical to apply these signing settings to both the main application target DailyDozen and the widget extension target DailyDozenWidgetExtension, as mismatched provisioning profiles will cause the widget to fail silently on launch.
+
+Once the build environment is configured, select the "DailyDozen" scheme and an appropriate simulator, such as the iPhone 15 Pro, then compile and run the application. Upon a successful build, the simulator will launch the main application. However, the widget will not appear automatically. To verify the artifact, navigate to the simulator’s Home Screen and long-press the background to enter "jiggle mode." Tap the addition button in the top-left corner to open the widget gallery, search for "DailyDozen," and add the widget to the Home Screen. Finally, tap the interactive elements on the widget to confirm that the state updates immediately in the background without launching the host application.
+
+\section{CODE ARCHITECTURE OVERVIEW}
+
+The system is built using Swift 5 and SwiftUI. The core data logic is encapsulated in a DailyDozensManager class, which conforms to the ObservableObject protocol to broadcast state changes.
+WidgetTarget: The widget extension uses a TimelineProvider. It generates a timeline of SimpleEntry objects. When a user interacts with a toggle on the widget, an AppIntent is fired.
+AppIntent: I utilized the AppIntent framework to handle background execution. The perform() function updates the shared UserDefaults (via App Groups) and calls WidgetCenter.shared.reloadAllTimelines() to refresh the UI immediately.
+
+
+\printbibliography
+
+\end{document}

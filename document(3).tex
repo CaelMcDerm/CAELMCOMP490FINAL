@@ -1,0 +1,188 @@
+\documentclass[10pt,twocolumn]{article}
+
+% use the oxycomps style file
+\usepackage{oxycomps}
+\usepackage{graphicx}
+% usage: \fixme[comments describing issue]{text to be fixed}
+% define \fixme as not doing anything special
+\newcommand{\fixme}[2][]{#2}
+% overwrite it so it shows up as red
+\renewcommand{\fixme}[2][]{\textcolor{red}{#2}}
+% overwrite it again so related text shows as footnotes
+%\renewcommand{\fixme}[2][]{\textcolor{red}{#2\footnote{#1}}}
+
+% read references.bib for the bibtex data
+\bibliographystyle{plain}
+\bibliography{references}
+
+% include metadata in the generated pdf file
+\pdfinfo{
+    /Title (Toward Digital Well-being: A Hybrid Model for Reducing Screen Time via iOS APIs)
+    /Author (Cael McDermott)
+}
+
+% set the title and author information
+\title{Toward Digital Well-being: A Hybrid Model for Reducing Screen Time via iOS APIs}
+\author{Cael McDermott}
+\affiliation{Occidental College}
+\email{mcdermottc@oxy.edu}
+
+\begin{document}
+
+\maketitle
+
+\section{Technical Background}
+
+Cell phone popularity has skyrocketed in recent years, with over 5.6 billion people using smartphones, 5 billion of whom are active on social media. With this rise in cellphone use has come a rise in addiction, with the average phone daily screen time reaching 3 hours and 46 minutes.\cite{DigitalMediaMentalHealth} Factor all types of screens, and that number increases to 6 hours and 40 minutes. Over the course of a year, this amounts to 56 days and 12 hours spent looking at a screen. Factor in getting eight hours of sleep each night, and 365 days each year dwindles to just 142 days per year not spent sleeping or looking at a screen. \cite{ScreentimeMentalHealth}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{IMG_2758.jpg}
+    \caption{Your caption here.}
+    \label{fig:my_image}
+\end{figure}
+
+
+While there is verifiable scientific literature highlighting the benefits of social media, this overarching trend has led to widespread mental health concerns. Research suggests that prolonged screen time negatively impacts both physical and mental health.\cite{ScreenTimeSleepQuality} Studies have found that excessive cellphone use is a significant predictor of depression in emerging adults, with overuse being associated with higher levels of stress, depressive mood, anxiety, and loneliness.\cite{ScreenTimeDepression}
+
+This addiction is not accidental; tech companies intentionally design their platforms to maximize engagement. \cite{Addiction} By hiring psychiatrists and engineers, they have developed features that exploit human psychology, ensuring users stay on their platforms as long as possible. \cite{Psychiatrists} Many follow the Hook Model, which keeps users engaged through triggers, actions, rewards, and investments.
+
+The consequences of these design strategies extend beyond individual users to broader social patterns. Excessive screen time has been linked to sleep disturbances, reduced attention spans, and difficulties with in-person social interaction, particularly among younger demographics. \cite{ScreenTimeSleepQuality} As people spend more and more time online, there is growing concern about the erosion of offline relationships and the displacement of meaningful activities by passive consumption. These patterns reinforce a cycle in which users feel both reliant on and dissatisfied with their digital habits, struggling to disengage even as they begin to recognize negative impacts.
+
+Despite increased awareness of these challenges, many existing interventions have struggled to create lasting change in user behavior. Simple tracking tools or screen time reports often fail to disrupt deeply ingrained habits, and hard-blocking apps can feel restrictive or easy to circumvent. \cite{Addiction} This highlights the need for more adaptive and user-centered approaches that balance autonomy with guidance, combining features like customizable nudges, gamification, and reflective feedback to support sustainable behavior change. Addressing the complex interplay between psychological design, social pressures, and personal motivations is essential for creating interventions that are both effective and acceptable to users.
+
+
+\section{Prior Work}
+
+While the previous section outlined different algorithmic approaches to screen time reduction, it remains essential to examine how these strategies have been implemented in real-world applications and research studies. Several screen time management apps, such as Google’s Digital Wellbeing, Apple’s Screen Time, and third-party tools like Forest and StayFree, have attempted to address this issue through various intervention methods.\cite{SmartphoneUseDepression} However, despite their widespread use, smartphone addiction remains a persistent problem, suggesting that these approaches may have key limitations. \cite{ReductionEqualsMentalHealthNoLooker}
+
+In one master’s thesis, eight subjects were asked to use Apple’s Screen Time to help minimize their phone usage, and five of the eight reported positive effects.\cite{DigitalDetox} These users found that screen time monitoring increased their awareness of excessive phone use, leading to self-regulation. However, three participants reported that the tool was not effective in reducing their overall screen time, citing difficulty in adhering to restrictions and the ease of bypassing limits as primary concerns.
+
+A similar study evaluating Google’s Digital Wellbeing found that while users appreciated the ability to track their app usage, many found the system’s intervention methods to be too passive. \cite{ScreenPhysicalMentalWellbeing}Digital Wellbeing allows users to set app timers, receive focus mode notifications, and view detailed usage reports, but it does not enforce restrictions strictly. Research by Purohit et al. (2020) suggests that users often ignore or dismiss nudges when they are not backed by stronger deterrents, leading to limited long-term impact on behavior. \cite{PhoneAddictionAnxiety}
+
+Beyond built-in screen time tracking tools, third-party applications such as Forest and StayFree have explored alternative intervention models. Forest gamifies screen time reduction by allowing users to plant virtual trees that grow when they stay off their phones.\cite{ScreenTimeDepression} When users access their phones whilst Forest is active, these trees wither and die, further incentivizing users to keep off their phone. This reward-based system has been shown to be effective for some users who find motivation in visual progress. However, studies suggest that habit-forming nudges work best in the short term, while long-term behavioral change requires more adaptive interventions. \cite{ScreenTimeInsomnia}StayFree, on the other hand, takes a stricter approach by incorporating hard blocking features, but this has been met with mixed reception, as users often disable restrictions when they feel frustrated or inconvenienced.
+
+While these applications demonstrate that various intervention models exist, their mixed effectiveness highlights the need for a more adaptive approach. Some studies suggest that a hybrid model combining nudging, gamification, and adaptive AI-based interventions could improve long-term user engagement. \cite{DigitalDetoxWellbeing}This project addresses gaps in existing solutions by implementing a dynamic intervention system designed to adapt to user behavior, striking a balance between effectiveness and user autonomy.
+
+Despite their differing methods, what these tools share is an underlying reliance on either passive tracking or rigid restriction, with limited integration of personalized adaptation over time. The majority of apps operate under static rules set at installation or by the user during setup, rather than dynamically adjusting to changing habits, usage patterns, or contextual cues.\cite{PhoneAddictionAnxiety} This static approach may fail to sustain motivation or relevance as users’ needs evolve, contributing to the disengagement or abandonment reported in multiple aforementioned studies. Addressing this gap requires an intervention capable of learning from user behavior, responding to trends, and tailoring strategies in real-time to maintain both effectiveness and user trust.
+
+Furthermore, few existing interventions explicitly account for the social and emotional factors that participants in my interviews identified as key drivers of excessive phone use, such as FOMO (fear of missing out), boredom, and the desire for social connection. While quantitative metrics like screen time hours provide useful benchmarks, they overlook the psychological context in which screen use occurs. An effective solution may need to incorporate more nuanced, context-aware interventions—such as adjusting nudges based on time of day, usage triggers, or emotional states—to align better with users’ lived experiences. Integrating these changes alongside algorithmic strategies could help create an intervention that feels both supportive and sustainable.
+
+\subsection{Project Relevance}
+My screen time management and restriction app will be valuable to anyone who has recognized that they are spending more time on their phone than they would like and are seeking a practical, supportive tool to help them regain control over their technology use. This includes users who feel that their phone use interferes with their productivity, sleep, mental health, or relationships, as well as individuals who have identified patterns of compulsive or habitual phone checking that they find difficult to break. The app is particularly designed for users who may not want to entirely disconnect from their devices but are looking for ways to create healthier boundaries with their screen time.
+
+By combining elements of both nudging and restriction, the app aims to provide an adaptive and sustainable approach to reducing excessive phone use. Rather than relying solely on hard blocking techniques that may feel punitive or inflexible, the app incorporates gentle reminders, customizable goals, and positive reinforcement to encourage gradual behavior change. At the same time, users have the option to set stricter limits or receive stronger interventions if they choose, allowing the app to adapt to different levels of motivation and self-regulation needs. This dual approach respects users’ autonomy while still providing effective tools to interrupt unwanted habits and promote mindful use.
+
+The app’s design is informed by research on behavior change and habit formation, recognizing that simply tracking screen time is often not enough to produce lasting change. Instead, it seeks to balance accountability with support, offering users insights into their usage patterns, timely nudges to interrupt automatic scrolling, and incentives to reinforce progress over time. By integrating these features into a seamless, user-friendly interface, the app aspires to be not only a tool for limiting phone use but also a companion in building healthier, more intentional digital habits.
+
+Ultimately, the app is designed to meet users where they are, recognizing that reducing screen time is not a one-size-fits-all journey. Each user has different motivations, challenges, and goals, whether reclaiming time, improving mental health, or increasing awareness of their habits. By offering flexibility and personalization, the app avoids rigid solutions, instead providing a customizable experience where users set goals, adjust interventions, and build healthier habits at their own pace. This approach may foster a more sustainable relationship with technology, empowering users to manage their screen time in a supportive, thoughtful, and achievable way.
+
+\subsection{Technical APIs and Systems}
+Android dominates the mobile market, with 83 percent of cellphone users relying on Android devices.\cite{AndroidAPI}. The operating system provides built-in APIs that allow developers to analyze user behavior and activity patterns. API's, or "application programming interface" are a set of tools that allows software to access features or data from an operating system or other applications. Two key APIs used for screen time monitoring are UsageStatsManager and Activity Recognition API.
+UsageStatsManager collects app usage history, measures session durations, and tracks foreground activity, helping apps determine how long users engage with different applications.
+Activity Recognition API leverages built-in sensors, such as accelerometers, GPS, and gyroscopes, to detect user movement patterns (e.g., walking, running, or remaining stationary).\cite{ScreenTimeInsomnia}
+Additionally, Android's hardware sensors can track physical activity and detect certain physiological states, providing deeper insights into user behavior.
+However, newer versions of Android have begun restricting access to these APIs due to privacy concerns. As a result, developers must now request explicit user permissions, and real-time tracking capabilities are increasingly limited to protect user data.
+
+Meanwhile, Apple’s ecosystem, while more closed than Android, offers developers the Screen Time API through the DeviceActivity and FamilyControls frameworks.\cite{AppleAPI}.  These tools allow developers to monitor device and app usage with a high level of accuracy and deep integration into iOS’s built-in reporting systems. The API provides access to metrics such as total screen time, time spent per app, and category breakdowns (e.g., social, productivity, games), all of which can be filtered by day, week, or usage session. \cite{AppleAPI}This ease of use is particularly appealing for this project — and considering I own a Mac and iPhone, it is also highly convenient. Notably, Apple’s 99 dollar developer fee only applies to app publication, not development, so it will not present a roadblock during the build phase.
+
+While Apple places strong emphasis on user privacy, the Screen Time API still allows for app-based monitoring and limited enforcement, such as creating usage limits, scheduling downtime, or prompting interventions when a user exceeds certain thresholds.\cite{PoorAppleDocumentation} However, these capabilities often require explicit user authorization and are significantly limited outside of managed device contexts, such as parental control or enterprise environments. As a result, although the data provided is useful, implementing behavioral interventions demands careful attention to permissions and user experience design.
+
+Because the iOS API is deeply embedded within system settings, it offers more consistency and reliability than scraping screen time data through informal means. It also integrates seamlessly with Apple’s notification infrastructure, making it possible to deliver real-time nudges or alerts when limits are crossed.\cite{ScreenTimeTeens}
+
+A notable limitation, however, is that hardblocking is essentially unsupported on Apple devices. The operating system does not permit third-party apps to block access to other apps entirely, meaning that implementing strict usage prevention would be far more difficult, if not impossible, on iOS compared to Android.\cite{PoorAppleDocumentation}
+
+\section{Methods}
+
+This project will implement a rule-based intervention system that combines screen time tracking, reminder notifications, and gamification to help users reduce excessive smartphone usage. The system will use Apple’s Screen Time API to monitor app usage and trigger interventions based on predefined thresholds. Users will receive reminders after exceeding set screen time limits, and engagement will be encouraged through a reward-based gamification system.
+
+Apple’s Screen Time API provides access to app usage statistics, device activity, and screen time reports. Using this API, the system can track the amount of time users spend on specific apps and trigger interventions when limits are exceeded. The app will also utilize UserNotifications framework to send reminder notifications at scheduled intervals. \cite{ScreenTimeAnxiety}
+
+To refine the intervention system, this project will analyze existing research on screen time interventions and digital well-being apps to determine the most effective implementation of three key hyperparameters:
+
+    Screen Time Limits – Fixed limits (e.g., 60, 90, or 120 minutes) vs. user-defined custom limits.
+
+    Reminder Frequency – Scheduled notifications (e.g., every 5, 15, 30, or 60 minutes) based on prior research findings.
+
+    Gamification Rewards – Comparing streak-based rewards vs. achievement-based incentives to encourage behavior change.
+
+By reviewing prior research and leveraging Apple’s Screen Time API, this project aims to identify best practices for balancing effectiveness and user autonomy in screen time reduction interventions. A small sample size will likely be used to conduct testing, and existing studies will inform the app's recommended settings.
+
+In addition to these core features, the app’s design will prioritize user flexibility and personalization. Allowing users to customize their own screen time goals, notification preferences, and reward types may increase engagement and perceived ownership of the intervention. Rather than enforcing rigid restrictions, the app will aim to foster a kinder and more collaborative relationship with the user, offering supportive nudges while respecting their right to adjust settings over time. This approach reflects insights from behavior change research, which emphasizes the importance of autonomy, self-efficacy, and individualized feedback in sustaining motivation.
+
+Furthermore, the app’s evaluation will focus not only on technical performance but also on how users experience the app and how they feel about using it. By including user feedback throughout the design process, the project aims to create a tool that is both effective at helping reduce screen time and empowering, while also being something users enjoy and find helpful.
+
+\section{Metrics}
+
+In line with these approaches, this project will evaluate the app’s effectiveness using a combination of quantitative and qualitative measures. One primary metric will be the percentage reduction in participants’ average daily screen time, measured over the two-week pilot study. This measure will allow for direct comparison between participants’ baseline usage (collected through a pre-survey or initial app logging) and their behavior while using the intervention app. A reduction of 10–20 percent over the trial period would be considered a meaningful initial outcome, based on benchmarks reported in prior research on screen time interventions.
+
+Another key metric will be notification response rate, or how often users take action (such as closing an app or putting down their phone) after receiving a reminder notification. Tracking this response rate will provide insight into the immediate influence of the app’s nudges and whether they are perceived as timely and motivating or easy to ignore. This data will also help evaluate the balance between supportive reminders and potential notification fatigue, which could reduce user engagement over time as a whole.
+
+Engagement with the app’s gamification features will serve as an additional behavioral metric. This will include tracking how frequently participants earn streaks, unlock rewards, or interact with progress displays within the app. Gamification engagement is relevant not only as a measure of feature use but also as an indicator of ongoing motivation. A decline in interaction with these elements may suggest that the reward system needs adjustment to maintain interest, or cut altogether.
+
+Alongside behavioral data, subjective measures will be collected through post-study surveys. Participants will be asked to reflect on their satisfaction with the app, whether they felt supported rather than controlled, and whether they perceived any meaningful changes in their screen time habits or awareness. These subjective perceptions are critical because an intervention can be technically effective at reducing screen time while still being experienced as punitive, frustrating, or unsustainable by users. As contemporary data suggests, frusterated users are far more likely to quit, so an intentional effort to minimize the chance of that happening is crucial. \cite{SmartphoneUseDepression}
+
+A unique proposed metric for this project is the rate at which users adjust their own time limits or notification settings over the course of the trial. An increase in self-initiated adjustments may reflect greater awareness and proactive engagement with managing screen time, signaling an internalization of the app’s goals. This metric has not been widely studied in prior research but may provide insight into long-term behavior change beyond short-term reductions.
+
+Finally, participant retention throughout the pilot study will serve as an indirect measure of the app’s usability and acceptability. High dropout rates or disengagement may indicate usability issues, notification overload, or unmet user expectations. Monitoring retention alongside direct feedback will help identify which elements of the app design require refinement to better support user goals.
+
+By combining these behavioral and subjective metrics, the project aims to provide an evaluation of the intervention’s effectiveness. Success will not be defined solely by numerical reductions in screen time, but also by users’ perceived agency, satisfaction, and willingness to continue using the app beyond the trial period. Failure would be represented in similar and/or higher screen time usage.
+\section{Three Week Project}
+
+During the three-week project, I initially set out to create an early prototype of an iOS-based intervention app. My plan was to spend the first week learning how to access Apple’s ScreenTime data, handling permission requests, and displaying basic usage statistics. In the second week, I intended to implement customizable or preset time limit options and develop the notification logic. The third week was planned for building a simple user interface capable of showing daily totals, goal progress, and reminders sent. However, as I began implementation, I encountered significant technical barriers. Apple’s ScreenTime API places strict limitations on third-party access to usage data, and developers who have worked with related frameworks describe the process as highly constrained, complex, and limited in scope.
+
+In researching potential workarounds, I discovered that some popular iOS screen time blockers rely on Apple’s “Network Extension” framework, creating VPN-based solutions to indirectly monitor or filter content. \cite{PoorAppleDocumentation}While this approach may offer a possible path forward, it became clear that fully exploring and implementing such a solution would exceed the scope of the three-week project. After discussing these challenges with Professor Justin Li, I decided to pivot away from a code-based deliverable and toward a qualitative research approach that would still contribute meaningfully to the project’s overall goals.
+
+To continue making progress despite these technical challenges, I conducted interviews with seven participants, all college-aged smartphone users. Each interview lasted approximately 25 to 30 minutes and followed a semi-structured format.The conversations allowed participants to reflect on their screen time habits, motivations for phone use, and feelings about reducing their screen time. Rather than collecting quantitative usage data, the interviews aimed to identify broader patterns and subjective experiences that could inform future design decisions.
+
+Participants reported daily screen time ranging from six to sixteen hours, with YouTube, Instagram, and TikTok identified as their most frequently used apps. Many participants described habitual phone use immediately after waking up and again before bed, with peak usage occurring in the evening. Emotional reactions to their phone use were mixed: some participants reported stress, guilt, or feelings of comparison linked to Instagram, while others described social media as an essential way to stay connected or unwind. Few participants had attempted to reduce their screen time, and none reported using app blockers or built-in limits. Across all of the interviews, participants highlighted how spontaneous, automatic urges often drove their phone use, with fear of missing out (FOMO) emerging as a common motivator.
+
+These interviews provided valuable insight into the complex relationship users have with their phones. Participants acknowledged both the downsides of excessive use and the benefits of connection and entertainment their devices provide. Any future intervention will need to balance reducing screen time while respecting these emotional, social, and practical needs.
+
+Additionally, the interviews revealed that participants’ attitudes toward screen time reduction were often shaped by ambivalence and competing priorities. While several participants recognized that their phone use was “too high” or “unhealthy,” they simultaneously viewed their devices as indispensable for maintaining friendships, following news, or accessing entertainment. This tension suggests that any intervention must be carefully positioned as a supportive tool rather than a restrictive or judgmental force. Some participants emphasized that they wanted to feel in control of their decisions, rather than having limits imposed externally.
+
+The findings also underscored the importance of designing interventions that account for context and timing. Many participants noted that their phone use was most excessive during moments of boredom, loneliness, or fatigue, when self-control was naturally lower. Future app features could explore ways to anticipate these high-risk moments and offer timely, gentle prompts to encourage reflection or alternative activities. Integrating these user-reported insights into the design process will be key to developing an intervention that feels both effective and empathetic.
+
+\section{Project Timeline and Evaluation}
+
+In preparation for the fall semester, I plan to conduct further research into Apple’s ScreenTime API and related frameworks over the summer. After encountering significant technical barriers with the ScreenTime API during the three-week project, I hope to use this time to explore whether workarounds such as Apple’s Network Extension framework or VPN-based solutions are viable paths forward. This research will allow me to enter the semester with a clearer understanding of whether continuing with these tools is realistic or whether I should pivot to an alternative approach. By resolving these technical questions ahead of time, I aim to either confidently abandon the original implementation plan or begin development from a solid technical foundation, minimizing delays once the semester begins. 
+
+The project’s next stage will focus on translating the insights gathered from user interviews into a functional intervention app. Development will prioritize features that align with participants’ described needs and challenges, particularly around habitual evening phone use, difficulty self-regulating, and ambivalence toward formal screen time limits. The app’s primary components will include screen time monitoring through available iOS frameworks, customizable nudges timed to interrupt habitual scrolling patterns, and a lightweight gamification system designed to reward sustained reductions in screen time.
+
+
+DISCLAIMER: The guideline that follows is what I hope to produce assuming that I can get Apple's Screen Time API figured out over summer. If I am unable to do so, I anticipate that development will look much different.
+
+
+Development and evaluation will follow a phased approach across the fall semester. In Weeks 1 and 2, I plan to finalize the app’s user interface design and specify technical requirements based on the most feasible implementation strategies (assuming I can get them working over the summer). This phase will also include designing notification content, reward structures, and onboarding flows that respond to the motivational and emotional factors identified in the interviews.
+
+Weeks 3 and 4 will focus on implementing the app’s core functionality, including coding the notification system, integrating screen time monitoring, and building the reward-tracking logic. During this period,  I will do a plethora of tests to ensure that reminders trigger at the appropriate times, screen time data is being captured accurately, and that the app’s basic features function reliably without negatively impacting device performance.
+
+Weeks 5 and 6 will emphasize refinement of the previously designed features. Using results from internal tests, I will adjust the notification timing, messaging tone, and reward feedback to better balance intrusiveness with encouragement. Usability testing with a small informal group may be included at this stage to flag any interface issues or technical bugs ahead of the formal pilot study.
+
+Weeks 7 and 8 will be dedicated to running the pilot study with recruited participants. Participants will use the app for a two-week trial, and their experiences will be documented through app usage data, mid-study check-ins, and a post-study survey. This study aims not only to measure behavioral outcomes, such as any reduction in screen time, but also to capture users’ subjective perceptions of the app’s usefulness, intrusiveness, and motivational impact.
+
+Finally, Weeks 9 and 10 will be spent analyzing the study data, refining the app based on participant feedback, as well as preparing final documentation. This phase will focus on synthesizing technical evaluation results with user-reported experiences to assess whether the intervention’s features were effective, well-received, and scalable for broader use. Particular attention will be given to identifying whether nudging, gamification, or a combination of both appeared most impactful in supporting participants’ goals.
+
+Throughout the semester, evaluation will center not only on technical performance, but also on user satisfaction. Rather than imposing rigid limits, the app’s success will be measured by its ability to increase users’ awareness, support self-regulation, and foster a healthier relationship with phone use without undermining the very real meaningful roles that smartphones play in participants’ lives.
+
+\section{Ethical Considerations}
+
+This project raises several ethical considerations that will need to be carefully addressed throughout development, testing, and evaluation. Given that the app is designed to track users’ screen time data, privacy and data security are clearly paramount. Any system that monitors user behavior risks overstepping into sensitive territory, and it is essential to establish clear boundaries around what information is collected, how it is used, and who can access it (which is largely why Apple makes it challenging for devs to access). \cite{PoorAppleDocumentation} To minimize these risks, data collection will be strictly limited to the information required for the app’s core functionality. No personally identifiable information will be collected, transmitted, or stored outside the user’s device. The app will be designed so that all data remains local to the device unless a user explicitly chooses to export or share it. By default, users’ screen time data will never be shared with third parties, servers, or any cloud services.
+
+Because the user testing will involve the collection of screen time data and survey responses, participants will be fully informed about what data is being collected, how long it will be retained, and the specific purposes for which it will be used. They will be asked to provide informed consent before participating, including the right to withdraw from the study at any time. Care will be taken to ensure that consent forms are written in accessible, non-technical language so that participants understand exactly what they are agreeing to.
+
+Beyond data privacy, ethical design of the app’s intervention features is a critical concern. Efforts will be made to avoid creating an app that uses manipulative tactics, coercion, or guilt-based messaging to influence users’ behavior. Notifications and rewards will be framed as supportive nudges rather than punishing consequences or shaming mechanisms. The goal is to promote user autonomy by empowering individuals to make informed choices about their screen time, rather than attempting to forcibly control or restrict their behavior. In designing notification timing, language,  tone, sensitivity to users’ mental health and emotional well-being will all be prioritized to avoid reinforcing feelings of failure, inadequacy, or dependency.
+
+Another important ethical consideration is managing the potential psychological impact of increasing users’ awareness of their screen time. While self-monitoring can certainly be a powerful tool for behavior change, it may also lead to feelings of anxiety, guilt, or self-criticism in some individuals. To mitigate this, the app will provide positive reinforcement through gamified rewards, personalized encouragement, and progress tracking that focuses on achievements rather than deficits. The app will avoid presenting harsh alerts or negative metrics that could trigger stress or disengagement, with positivity being championed whenever possible. 
+
+However, the app will be transparent about its limitations and intended scope. It will not present itself as some sort of medical device, a diagnostic tool, or a treatment for addiction or mental health conditions. If users indicate that they are experiencing significant distress related to their phone use, the app may provide resources or referrals to reputable organizations but will not attempt to diagnose or intervene directly in mental health matters.
+
+Throughout development, accessibility and inclusivity will also be prioritized to ensure the app is usable and beneficial to a diverse range of users. User testing will seek input from a diverse participant pool to identify unintended biases or barriers that might limit the app’s effectiveness across different groups.
+
+Finally, ethical evaluation will be an ongoing process, rather than some sort of one-time checklist. Feedback from participants will be actively  integrated into the app’s design process to address any potential emerging ethical concerns. I intend to meet with various professors in the department to ensure I can minimize as many ethical concerns as possible.
+
+By centering ethical principles in the app’s design and evaluation, the project aims to respect user privacy, autonomy, and well-being while also promoting meaningful and sustainable changes in screen time behavior.
+
+\printbibliography
+
+\end{document}
